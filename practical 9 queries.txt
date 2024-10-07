@@ -1,0 +1,82 @@
+/*PRACTICAL – 9 – “Miscellaneous” Queries
+(1) Find the average rate for each Order.
+SELECT Od_no, AVG(Rate) AS Avg_Rate
+FROM Salesorder_Details
+GROUP BY Od_no;
+
+(2) Give the loan details of all the customers.
+SELECT Borrow.Loanno, Borrow.Cname, Borrow.Bname, Borrow.Amount
+FROM Borrow;
+
+(3) List the customer name having loan account in the same branch city they live in.
+SELECT Borrow.Cname 
+FROM Borrow 
+JOIN Customers ON Borrow.Cname = Customers.Cname
+JOIN Branch ON Borrow.Bname = Branch.Bname 
+WHERE Customers.City = Branch.City;
+
+(4) Provide the loan details of all the customers who have opened their accounts after August’95.
+SELECT Loanno, Cname, Bname, Amount 
+FROM Borrow 
+JOIN Deposit ON Borrow.Cname = Deposit.Cname 
+WHERE Deposit.Date > '1995-08-31';
+
+(5) List the order information for client C00001 and C00002.
+SELECT * 
+FROM Salesorder 
+WHERE Cl_no IN ('C00001', 'C00002');
+
+(6) List all the information for the orders placed in the month of June.
+SELECT * 
+FROM Salesorder 
+WHERE EXTRACT(MONTH FROM O_dat) = 6;
+
+(7) List the details of clients who do not stay in Maharashtra.
+SELECT * 
+FROM Client 
+WHERE State !='Maharashtra';
+
+(8) Determine the maximum and minimum product price. Rename the output as “Max_Price” and “Min_Price”.
+SELECT MAX(Sell_Price) AS Max_Price, MIN(Sell_Price) AS Min_Price FROM Product;
+
+(9) Count the number of products having price less than or equal to 500.
+SELECT COUNT(*) 
+FROM Product 
+WHERE Sell_Price <= 500;
+
+(10) List the order number and the day on which client placed an order.
+SELECT Od_no, O_dat FROM Salesorder;
+
+(11) List the month and the date on which an order is to be delivered.
+SELECT EXTRACT(MONTH FROM D_dat) AS Month, EXTRACT(DAY FROM D_dat) AS Day 
+FROM Salesorder;
+
+(12) List the date, 25 days after today’s date.
+SELECT CURRENT_DATE + INTERVAL '25 days' AS Future_Date;
+
+(13) Find the total of all the billed orders in the month of June.
+SELECT SUM(Bill) 
+FROM Salesorder 
+WHERE EXTRACT(MONTH FROM O_dat) = 6;
+
+(14) List the products and orders from customers who have ordered less than 5 units of “Pull Overs”.
+SELECT * 
+FROM Salesorder_Details 
+WHERE Pr_no = 'P07885' AND Qty_order < 5;
+
+(15) Find the list of products and orders placed by “Ivan Bayrosss” and “Mamta Muzumdar”.
+SELECT * 
+FROM Salesorder_Details 
+JOIN Salesorder ON Salesorder_Details.Od_no = Salesorder.Od_no
+WHERE Cl_no IN ('C00001', 'C00002');
+
+(16) List the clients who placed order before June’04.
+SELECT * 
+FROM Salesorder 
+WHERE O_dat < '2004-06-01';
+
+(17) List all the clients who stays in “Bengaluru” or “Mangalore”.
+SELECT * 
+FROM Client 
+WHERE City IN ('Bangalore', 'Mangalore');
+*/

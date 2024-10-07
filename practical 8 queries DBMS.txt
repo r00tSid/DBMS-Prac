@@ -1,0 +1,86 @@
+/*PRACTICAL – 8 – “Join” Queries
+(1) Display all the employee name and the city where they work.
+(2) Display the employee name and company’s name having salary more than 15000. 
+ select e.emp_name,w.cmo_name from employee e inner join work w on e.emp_name=w.emp_name where w.salary>15000;
+(3) Find the average rating and age of all sailors.
+select avg(rating),avg(age) from sailors;
+(4) List various products available.
+(5) Display the names of salesman who have salary more than 2850.
+(6) Change the cost price of Trousers to 950
+update product set cost_price=950 where pr_no='p07868';
+(7) List all the clients having “a” as a second character in their names. 
+select Name from client where Name like '_a%';
+(8) List all the products whose QtyonHand is less than Reorderlvl.
+select dscr from product where Qty<'Recorderlvl';
+(9) Print the description and total qty sold for each product.
+select p.dscr,s.qty_order from product p inner join Salesorder_Details s on p.pr_no=s.pr_no;
+(10) Find out all the products which have been sold to “Ivan Bayross”.
+SELECT p.dscr
+    -> FROM product p
+    -> INNER JOIN salesorder_details s ON p.pr_no = s.pr_no
+    -> INNER JOIN salesorder sl ON sl.od_no = s.od_no
+    -> INNER JOIN client c ON sl.cl_no = c.cl_no
+    -> WHERE c.cl_no = 'C00001';
+(11) Find the names of all clients who have purchased Trousers.
+SELECT c.name
+    -> FROM client c
+    -> INNER JOIN salesorder sl ON sl.cl_no = c.cl_no
+    -> INNER JOIN salesorder_details s ON s.od_no = sl.od_no
+    -> INNER JOIN product p ON p.pr_no = s.pr_no
+    -> WHERE p.pr_no = 'p07868';
+(12) Find the products and their quantities for the orders placed by client C00001 and C00002.
+SELECT
+    ->     so.Od_no AS Order_Number,
+    ->     so.Cl_no AS Client_Number,
+    ->     sod.Pr_no AS Product_Number,
+    ->     p.Dscr AS Product_Description,
+    ->     sod.Qty_order AS Quantity_Ordered,
+    ->     sod.Qty_disp AS Quantity_Dispatched
+    -> FROM
+    ->     Salesorder so
+    -> JOIN
+    ->     Salesorder_Details sod ON so.Od_no = sod.Od_no
+    -> JOIN
+    ->     Product p ON sod.Pr_no = p.Pr_no
+    -> WHERE
+    ->     so.Cl_no IN ('C00001', 'C00002');
+(13) List the client details who place order no. O19001.
+SELECT 
+    c.Cl_no, 
+    c.Name, 
+    c.City, 
+    c.Pincode, 
+    c.State, 
+    c.Baldue
+FROM 
+    Client c
+JOIN 
+    Salesorder so ON c.Cl_no = so.Cl_no
+WHERE 
+    so.Od_no = 'O19001';
+
+
+(14) List the name of clients who have placed orders worth Rs. 10000 or more.
+SELECT DISTINCT 
+    c.Name
+FROM 
+    Client c
+JOIN 
+    Salesorder so ON c.Cl_no = so.Cl_no
+JOIN 
+    Salesorder_Details sod ON so.Od_no = sod.Od_no
+GROUP BY 
+    c.Name, so.Od_no
+HAVING 
+    SUM(sod.Qty_order * sod.Rate) >= 10000;
+
+(15) Find the total of Qty ordered for each Order.
+SELECT 
+    sod.Od_no, 
+    SUM(sod.Qty_order) AS Total_Quantity_Ordered
+FROM 
+    Salesorder_Details sod
+GROUP BY 
+    sod.Od_no;
+
+*/

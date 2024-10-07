@@ -1,0 +1,47 @@
+/*PRACTICAL – 7 – “Join” Queries
+(1) Find the salary of Adam.
+select salary from employee natural join work where emp_name="adam"; 
+select *from Work;
+(2) Find the city where Brooks work. 
+select city from employee natural join work where Emp_name="brooks";
+(3) Display the sailor’s details whose boat is booked for 9th May, 98.
+select * from sailors natural join reserves where day="9 – aug- 98";
+(4) Display the day of ride and sailor name for boat 103.
+select Sname,day from sailors natural join reserves where Bid="103";
+(5) Display the sailor name and its age for Red colored and 101 boat.
+ select s.sname,s.age,b.color,b.bid from sailors s inner join reserves r on s.sid=r.sid inner join boats b on b.bid=r.bid where b.color="red" and b.bid="101";
+(6) Display the sailor details whose boat is never booked.
+select * from sailors s inner join reserves r on s.sid=r.sid WHERE s.sid NOT IN (r.sid);
+select *from sailors s inner join reserves r on s.sid=r.sid where s.sid!=r.sid;
+(7) Display the sailor name that has Red or Green Boat.
+select Sname from sailors s inner join reserves r on s.sid=r.sid inner join boats b on b.bid=r.bid where b.color="red" or "green";
+(8) Display all sailor details and boat details and who has Interlake boat.
+select * from sailors s cross join reserves r on s.sid=r.sid cross join boats b on b.bid=r.bid where b.Bname="Interlake";
+(9) Display sailor’s rating with boat details or the trip on 10th October, 98.
+select s.Rating,r.Day
+	from sailors s inner join reserves r on s.sid=r.sid 
+    where r.Day="10 -oct- 98";
+(10) Display the sailor id and name whose age is more than 42 or who has Blue colored boat.
+select s.sid,s.sname,s.age,b.Color
+	from sailors s inner join reserves r on s.sid=r.sid 
+    inner join boats b on r.bid=b.bid
+    where s.age>42 or b.color="Blue";
+(11) Display name and rating of sailor whose boat name is Clipper.
+select s.sname,s.rating,b.Bname
+	from sailors s inner join reserves r on s.sid=r.sid 
+    inner join boats b on r.bid=b.bid
+    where b.Bname='Clipper';
+(12) List products whose selling price is more than 500 and less than equal to 750.
+select dscr from products where sell_orice between 500 and 750;
+(13) Describe the second highest salary of an employee.
+SELECT MAX(SALARY) FROM work 
+	WHERE SALARY < (SELECT MAX(SALARY) FROM work);
+(14) Display the date of travel and sailor’s name whose age is between 35 and 65.
+select r.day,s.sname,s.age
+	from sailors s inner join reserves r on s.sid=r.sid 
+    where s.age between 35 and 65;
+(15) List all the employees working for “FBC”.*/
+select w.Emp_name,c.Cmp_name
+	from employee e inner join work w on e.Emp_name=w.Emp_name 
+    inner join Company c on c.Cmp_name=w.Cmp_name
+    where c.Cmp_name="FBC";
